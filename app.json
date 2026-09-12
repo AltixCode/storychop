@@ -8,9 +8,15 @@
     "scheme": "storychop",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0B0F19"
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.hushtunnel.storychop",
+      "buildNumber": "1",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "StoryChop needs photo library access to select and export video clips.",
         "NSPhotoLibraryAddUsageDescription": "StoryChop saves split video clips directly to your photo library."
@@ -18,8 +24,9 @@
     },
     "android": {
       "package": "com.hushtunnel.storychop",
+      "versionCode": 1,
       "adaptiveIcon": {
-        "backgroundColor": "#0F172A",
+        "backgroundColor": "#0B0F19",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
