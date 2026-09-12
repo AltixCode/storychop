@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.hushtunnel.storychop",
+      "bundleIdentifier": "com.altixcode.storychop",
       "buildNumber": "1",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "StoryChop needs photo library access to select and export video clips.",
@@ -23,7 +23,7 @@
       }
     },
     "android": {
-      "package": "com.hushtunnel.storychop",
+      "package": "com.altixcode.storychop",
       "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#0B0F19",

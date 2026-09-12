@@ -8,7 +8,7 @@
 
 ### Completed Tasks
 * [x] Initialized Expo SDK 57+ repository with TypeScript template
-* [x] Configured bundle IDs (`com.hushtunnel.storychop`) and permissions in `app.json`
+* [x] Configured bundle IDs (`com.altixcode.storychop`) and permissions in `app.json`
 * [x] Configured NativeWind v4, Tailwind CSS, and Metro config
 * [x] Implemented universal RevenueCat module in `src/services/purchases.ts` ($6.99 Lifetime Pro)
 * [x] Implemented mathematical slicing logic and stream-copy export engine in `src/services/ffmpeg.ts`
