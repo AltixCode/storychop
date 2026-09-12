@@ -1,17 +1,25 @@
 {
   "expo": {
-    "name": "storychop",
+    "name": "StoryChop",
     "slug": "storychop",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "scheme": "storychop",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hushtunnel.storychop",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "StoryChop needs photo library access to select and export video clips.",
+        "NSPhotoLibraryAddUsageDescription": "StoryChop saves split video clips directly to your photo library."
+      }
     },
     "android": {
+      "package": "com.hushtunnel.storychop",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#0F172A",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -20,6 +28,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
