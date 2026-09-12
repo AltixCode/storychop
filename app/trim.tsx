@@ -7,6 +7,7 @@ import { useVideoStore } from '../src/store/useVideoStore';
 import { PresetSelector } from '../src/components/PresetSelector';
 import { TimelineBar } from '../src/components/TimelineBar';
 import { PaywallModal } from '../src/components/PaywallModal';
+import { t } from '../src/i18n';
 
 export default function TrimScreen() {
   const router = useRouter();
@@ -51,15 +52,15 @@ export default function TrimScreen() {
           <View className="bg-amber-950/40 border border-amber-500/40 p-4 rounded-2xl my-3 flex-row items-start">
             <AlertCircle size={18} color="#F59E0B" />
             <View className="flex-1 ml-3">
-              <Text className="text-amber-300 font-bold text-sm">Long Video Detected</Text>
+              <Text className="text-amber-300 font-bold text-sm">{t('longVideoDetected')}</Text>
               <Text className="text-amber-200/80 text-xs mt-0.5 leading-relaxed">
-                Videos longer than 3 minutes require StoryChop Pro. Free exports support up to 3 minutes.
+                {t('longVideoDesc')}
               </Text>
               <TouchableOpacity
                 onPress={() => setPaywallVisible(true)}
                 className="mt-2 bg-amber-500/20 self-start px-3 py-1 rounded-lg border border-amber-500/30"
               >
-                <Text className="text-amber-400 text-xs font-bold">Unlock Pro ($6.99)</Text>
+                <Text className="text-amber-400 text-xs font-bold">{t('unlockPro')}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -72,9 +73,9 @@ export default function TrimScreen() {
               <ArrowDownUp size={18} color="#60A5FA" />
             </View>
             <View className="flex-1">
-              <Text className="text-white font-bold text-sm">Reverse Export Order</Text>
+              <Text className="text-white font-bold text-sm">{t('reverseExportOrder')}</Text>
               <Text className="text-slate-400 text-xs mt-0.5">
-                Saves latest clip first for chronological Instagram story pickers
+                {t('reverseExportOrderDesc')}
               </Text>
             </View>
           </View>
@@ -101,7 +102,7 @@ export default function TrimScreen() {
         >
           <Scissors size={20} color="#FFFFFF" />
           <Text className="text-white font-bold text-base ml-2 mr-2">
-            Export {segments.length} Clips
+            {t('exportClips', { count: segments.length })}
           </Text>
           <ArrowRight size={18} color="#FFFFFF" />
         </TouchableOpacity>

@@ -13,6 +13,7 @@ import {
 } from 'lucide-react-native';
 import { useVideoStore } from '../src/store/useVideoStore';
 import { purchaseLifetime, restorePurchases } from '../src/services/purchases';
+import { t } from '../src/i18n';
 
 export default function PaywallScreen() {
   const router = useRouter();
@@ -31,10 +32,10 @@ export default function PaywallScreen() {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         router.back();
       } else {
-        setErrorMsg('Purchase was canceled or could not be completed.');
+        setErrorMsg(t('purchaseError'));
       }
     } catch {
-      setErrorMsg('An unexpected payment error occurred.');
+      setErrorMsg(t('unexpectedError'));
     } finally {
       setLoading(false);
     }
@@ -51,10 +52,10 @@ export default function PaywallScreen() {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         router.back();
       } else {
-        setErrorMsg('No prior purchases found to restore.');
+        setErrorMsg(t('noPriorPurchases'));
       }
     } catch {
-      setErrorMsg('Failed to restore purchases.');
+      setErrorMsg(t('restoreError'));
     } finally {
       setLoading(false);
     }
@@ -63,23 +64,23 @@ export default function PaywallScreen() {
   const features = [
     {
       icon: <InfinityIcon size={20} color="#38BDF8" />,
-      title: 'Unlimited Video Length',
-      desc: 'Cut 15-min, 30-min, or 60-min podcast recordings without length limits.',
+      title: t('feat1Title'),
+      desc: t('feat1Desc'),
     },
     {
       icon: <Sliders size={20} color="#A855F7" />,
-      title: 'Custom Split Intervals',
-      desc: 'Slice precisely every N seconds or into exact clip quantities.',
+      title: t('feat2Title'),
+      desc: t('feat2Desc'),
     },
     {
       icon: <Zap size={20} color="#F59E0B" />,
-      title: 'Reverse Export Order',
-      desc: 'Save newest clip first so Instagram story pickers show parts in order.',
+      title: t('feat3Title'),
+      desc: t('feat3Desc'),
     },
     {
       icon: <ShieldCheck size={20} color="#10B981" />,
-      title: '100% On-Device Privacy',
-      desc: 'No servers, no tracking, and no accounts. Your videos stay on your phone.',
+      title: t('feat4Title'),
+      desc: t('feat4Desc'),
     },
   ];
 
@@ -91,7 +92,7 @@ export default function PaywallScreen() {
           <View className="bg-blue-500/20 p-2 rounded-xl mr-2.5">
             <Sparkles size={20} color="#60A5FA" />
           </View>
-          <Text className="text-xl font-extrabold text-white">StoryChop Pro</Text>
+          <Text className="text-xl font-extrabold text-white">{t('paywallTitle')}</Text>
         </View>
         <TouchableOpacity
           onPress={() => router.back()}
@@ -105,14 +106,13 @@ export default function PaywallScreen() {
         {/* Anti-Subscription Card */}
         <View className="bg-gradient-to-br from-blue-950/80 to-slate-900 border border-blue-900/60 p-5 rounded-2xl mb-6">
           <Text className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-1">
-            Anti-Subscription Promise
+            {t('antiSubTitle')}
           </Text>
           <Text className="text-base font-bold text-white leading-snug">
-            No Subscriptions. No Accounts. 100% On-Device Privacy. Own It Forever.
+            {t('antiSubHeadline')}
           </Text>
           <Text className="text-slate-400 text-xs mt-2 leading-relaxed">
-            Other apps charge $4.99 every single week. StoryChop is a single one-time purchase that
-            you keep forever across all your devices.
+            {t('antiSubDesc')}
           </Text>
         </View>
 
@@ -149,7 +149,7 @@ export default function PaywallScreen() {
           ) : (
             <>
               <Text className="text-white font-extrabold text-base mr-2">
-                Unlock Lifetime Access — $6.99
+                {t('lifetimeAccess')}
               </Text>
               <Check size={18} color="#FFFFFF" strokeWidth={3} />
             </>
@@ -158,10 +158,10 @@ export default function PaywallScreen() {
 
         <View className="flex-row items-center justify-center space-x-6 mt-4">
           <TouchableOpacity onPress={handleRestore} disabled={loading}>
-            <Text className="text-slate-400 text-xs underline">Restore Purchases</Text>
+            <Text className="text-slate-400 text-xs underline">{t('restorePurchases')}</Text>
           </TouchableOpacity>
           <Text className="text-slate-600 text-xs">•</Text>
-          <Text className="text-slate-500 text-xs">One-time payment. Never recurring.</Text>
+          <Text className="text-slate-500 text-xs">{t('oneTimePayment')}</Text>
         </View>
       </View>
     </View>

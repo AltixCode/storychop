@@ -5,6 +5,7 @@ import * as Haptics from 'expo-haptics';
 import { CheckCircle2, XCircle, Film, Sparkles, ArrowLeft, RotateCcw } from 'lucide-react-native';
 import { useVideoStore } from '../src/store/useVideoStore';
 import { executeVideoSlicing } from '../src/services/ffmpeg';
+import { t } from '../src/i18n';
 
 export default function ExportingScreen() {
   const router = useRouter();
@@ -50,7 +51,7 @@ export default function ExportingScreen() {
         setIsDone(true);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       } else {
-        setErrorMessage(result.error || 'Failed to export video clips.');
+        setErrorMessage(result.error || t('exportFailed'));
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       }
     };
@@ -86,17 +87,16 @@ export default function ExportingScreen() {
             <CheckCircle2 size={56} color="#34D399" />
           </View>
           <Text className="text-2xl font-extrabold text-white text-center mb-2">
-            All Clips Saved!
+            {t('allClipsSaved')}
           </Text>
           <Text className="text-slate-400 text-sm text-center max-w-xs leading-relaxed mb-6">
-            {segments.length} video clips were losslessly exported to your photo library in optimal
-            posting order.
+            {t('allClipsSavedDesc', { count: segments.length })}
           </Text>
 
           <View className="bg-slate-900 border border-slate-800 p-4 rounded-2xl w-full mb-8 flex-row items-center">
             <Sparkles size={20} color="#60A5FA" />
             <Text className="text-slate-300 text-xs ml-3 flex-1">
-              No quality re-encoding was performed. Native 4K bitrate and HDR tags preserved.
+              {t('qualityPreserved')}
             </Text>
           </View>
 
@@ -106,7 +106,7 @@ export default function ExportingScreen() {
             className="w-full bg-blue-600 active:bg-blue-500 py-4 rounded-2xl flex-row items-center justify-center shadow-lg shadow-blue-500/20"
           >
             <RotateCcw size={18} color="#FFFFFF" />
-            <Text className="text-white font-bold text-base ml-2">Split Another Video</Text>
+            <Text className="text-white font-bold text-base ml-2">{t('splitAnotherVideo')}</Text>
           </TouchableOpacity>
         </View>
       ) : errorMessage ? (
@@ -115,7 +115,7 @@ export default function ExportingScreen() {
           <View className="bg-rose-500/20 p-5 rounded-full mb-5 border border-rose-500/30">
             <XCircle size={56} color="#F43F5E" />
           </View>
-          <Text className="text-2xl font-extrabold text-white text-center mb-2">Export Failed</Text>
+          <Text className="text-2xl font-extrabold text-white text-center mb-2">{t('exportFailed')}</Text>
           <Text className="text-rose-300 text-xs text-center max-w-xs mb-8">{errorMessage}</Text>
 
           <TouchableOpacity
@@ -123,7 +123,7 @@ export default function ExportingScreen() {
             className="bg-slate-800 py-3.5 px-6 rounded-xl flex-row items-center justify-center"
           >
             <ArrowLeft size={16} color="#FFFFFF" />
-            <Text className="text-white font-semibold text-sm ml-2">Back to Split Settings</Text>
+            <Text className="text-white font-semibold text-sm ml-2">{t('backToSettings')}</Text>
           </TouchableOpacity>
         </View>
       ) : (
@@ -134,10 +134,10 @@ export default function ExportingScreen() {
           </View>
 
           <Text className="text-xl font-bold text-white text-center mb-1">
-            Lossless Stream Slicing
+            {t('losslessSlicing')}
           </Text>
           <Text className="text-slate-400 text-xs text-center mb-8">
-            Exporting clip {currentSegmentIndex || 1} of {segments.length}...
+            {t('exportingProgress', { current: currentSegmentIndex || 1, total: segments.length })}
           </Text>
 
           {/* Progress Bar */}
@@ -149,7 +149,7 @@ export default function ExportingScreen() {
           </View>
 
           <View className="w-full flex-row justify-between mb-8">
-            <Text className="text-slate-500 text-xs font-mono">Stream-Copy Engine</Text>
+            <Text className="text-slate-500 text-xs font-mono">{t('streamEngine')}</Text>
             <Text className="text-blue-400 text-xs font-bold font-mono">{progressPercent}%</Text>
           </View>
 
@@ -160,7 +160,7 @@ export default function ExportingScreen() {
             onPress={handleCancel}
             className="px-6 py-2.5 rounded-full bg-slate-900 border border-slate-800"
           >
-            <Text className="text-slate-400 text-xs font-semibold">Cancel Export</Text>
+            <Text className="text-slate-400 text-xs font-semibold">{t('cancelExport')}</Text>
           </TouchableOpacity>
         </View>
       )}

@@ -5,6 +5,7 @@ import { TouchableOpacity, Text } from 'react-native';
 import { Crown } from 'lucide-react-native';
 import { initPurchases, checkIsPro } from '../src/services/purchases';
 import { useVideoStore } from '../src/store/useVideoStore';
+import { t } from '../src/i18n';
 import '../global.css';
 
 export default function RootLayout() {
@@ -32,7 +33,7 @@ export default function RootLayout() {
                 className="bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-full flex-row items-center"
               >
                 <Crown size={14} color="#F59E0B" />
-                <Text className="text-amber-400 text-xs font-bold ml-1.5">PRO</Text>
+                <Text className="text-amber-400 text-xs font-bold ml-1.5">{t('proBadge')}</Text>
               </TouchableOpacity>
             ) : null,
         }}
@@ -47,21 +48,21 @@ export default function RootLayout() {
         <Stack.Screen
           name="trim"
           options={{
-            title: 'Split Settings',
-            headerBackTitle: 'Back',
+            title: t('trimTitle'),
+            headerBackTitle: t('back'),
           }}
         />
         <Stack.Screen
           name="exporting"
           options={{
-            title: 'Exporting Clips',
+            title: t('exportingTitle'),
             headerBackVisible: false,
           }}
         />
         <Stack.Screen
           name="paywall"
           options={{
-            title: 'StoryChop Pro',
+            title: t('paywallTitle'),
             presentation: 'modal',
           }}
         />

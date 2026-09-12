@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { Scissors, Film } from 'lucide-react-native';
 import { useVideoStore } from '../store/useVideoStore';
+import { t } from '../i18n';
 
 const formatSeconds = (sec: number): string => {
   const m = Math.floor(sec / 60);
@@ -20,10 +21,12 @@ export const TimelineBar: React.FC = () => {
         <View className="flex-row items-center">
           <Scissors size={14} color="#60A5FA" />
           <Text className="text-xs font-semibold uppercase tracking-wider text-slate-300 ml-1.5">
-            Output Clips ({segments.length})
+            {t('outputClips', { count: segments.length })}
           </Text>
         </View>
-        <Text className="text-xs text-slate-400">Total: {formatSeconds(video.duration)}</Text>
+        <Text className="text-xs text-slate-400">
+          {t('totalDuration', { duration: formatSeconds(video.duration) })}
+        </Text>
       </View>
 
       {/* Visual Segment Timeline Strip */}
@@ -57,13 +60,15 @@ export const TimelineBar: React.FC = () => {
           >
             <View className="flex-row items-center mb-1">
               <Film size={12} color="#94A3B8" />
-              <Text className="text-xs font-bold text-white ml-1">Part {seg.index}</Text>
+              <Text className="text-xs font-bold text-white ml-1">
+                {t('partIndex', { index: seg.index })}
+              </Text>
             </View>
             <Text className="text-xs font-mono text-blue-400">
               {formatSeconds(seg.startTime)} - {formatSeconds(seg.endTime)}
             </Text>
             <Text className="text-[10px] text-slate-500 mt-0.5">
-              {seg.duration.toFixed(0)}s duration
+              {t('partDuration', { duration: seg.duration.toFixed(0) })}
             </Text>
           </View>
         ))}
