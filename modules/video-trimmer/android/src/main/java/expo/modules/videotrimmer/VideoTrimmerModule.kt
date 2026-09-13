@@ -89,13 +89,27 @@ class VideoTrimmerModule : Module() {
 
         muxer.start()
         // SEEK_TO_PREVIOUS_SYNC: the muxer cannot start mid-GOP, so the clip
-        // begins at the nearest preceding key frame. Seeking to the closest
-        // sync instead would drop frames the user selected.
+        // begins at the nearest preceding key frame.
         extractor.seekTo(startUs, MediaExtractor.SEEK_TO_PREVIOUS_SYNC)
 
         val buffer = ByteBuffer.allocate(maxInputSize)
         val bufferInfo = android.media.MediaCodec.BufferInfo()
         var wroteAnything = false
+        // Timestamps are rebased on the first sample actually written, not on
+        // the requested start.
+        //
+        // Every sample from the preceding key frame onward is kept. Skipping
+        // the ones before startUs -- which is what this did -- threw away the
+        // footage between the key frame and the cut and left the clip opening
+        // on a mid-GOP frame that has no key frame to decode against. Across a
+        // 95s source split at 30s that silently lost about 2.3s of video, and
+        // the gaps landed exactly on the cuts, where a viewer notices.
+        //
+        // Stream copy cannot cut mid-GOP, so the choice is a short lead-in or
+        // re-encoding. The lead-in keeps every frame and keeps the promise on
+        // the box: clips overlap by at most one GOP rather than dropping
+        // content.
+        var firstSampleTime = -1L
 
         while (true) {
           bufferInfo.offset = 0
@@ -105,13 +119,12 @@ class VideoTrimmerModule : Module() {
           val sampleTime = extractor.sampleTime
           if (sampleTime > endUs) break
 
-          if (sampleTime >= startUs) {
-            bufferInfo.presentationTimeUs = sampleTime - startUs
-            bufferInfo.flags = extractor.sampleFlags
-            indexMap[extractor.sampleTrackIndex]?.let { target ->
-              muxer.writeSampleData(target, buffer, bufferInfo)
-              wroteAnything = true
-            }
+          if (firstSampleTime < 0) firstSampleTime = sampleTime
+          bufferInfo.presentationTimeUs = sampleTime - firstSampleTime
+          bufferInfo.flags = extractor.sampleFlags
+          indexMap[extractor.sampleTrackIndex]?.let { target ->
+            muxer.writeSampleData(target, buffer, bufferInfo)
+            wroteAnything = true
           }
           extractor.advance()
         }
