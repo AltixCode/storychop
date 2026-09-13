@@ -35,7 +35,11 @@ export const executeVideoSlicing = async (
   const durations: number[] = [];
 
   try {
-    const { status } = await MediaLibrary.requestPermissionsAsync();
+    // Add-only: neither app reads the library (imports come through the system
+    // picker, which needs no permission), so asking for full read/write access
+    // prompts for far more than is used -- and iOS can refuse it outright
+    // without showing a prompt at all, which silently broke RedactPro's export.
+    const { status } = await MediaLibrary.requestPermissionsAsync(true);
     if (status !== 'granted') {
       return {
         success: false,

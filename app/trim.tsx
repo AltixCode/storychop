@@ -7,9 +7,11 @@ import { useVideoStore } from '../src/store/useVideoStore';
 import { PresetSelector } from '../src/components/PresetSelector';
 import { TimelineBar } from '../src/components/TimelineBar';
 import { PaywallModal } from '../src/components/PaywallModal';
+import { usePaywall } from '../src/hooks/usePaywall';
 import { t } from '../src/i18n';
 
 export default function TrimScreen() {
+  const { priceString } = usePaywall(() => undefined);
   const router = useRouter();
   const {
     video,
@@ -60,7 +62,7 @@ export default function TrimScreen() {
                 onPress={() => setPaywallVisible(true)}
                 className="mt-2 bg-amber-500/20 self-start px-3 py-1 rounded-lg border border-amber-500/30"
               >
-                <Text className="text-amber-400 text-xs font-bold">{t('unlockPro')}</Text>
+                <Text className="text-amber-400 text-xs font-bold">{t('unlockPro', { price: priceString ?? '' })}</Text>
               </TouchableOpacity>
             </View>
           </View>
