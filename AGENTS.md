@@ -43,21 +43,12 @@ Deployed via Coolify on Hetzner VPS (`2.28.42.222`).
 * Zero-log and zero-cloud invariants: No remote analytics, error trackers, or telemetry that uploads user media or identifiers.
 * All processing must occur in local sandboxed storage and stream to `expo-media-library` or `expo-sharing`.
 
-## 6. Mandatory 12-Language Localization Protocol
-* **Core Rule:** The application must maintain 100% localization across 12 Tier-1 global languages:
-  1. **English (`en`)** — Default fallback
-  2. **Spanish (`es`)** — Latin America, US, Spain
-  3. **French (`fr`)** — France, Canada, Francophone markets
-  4. **German (`de`)** — Germany, Austria, Switzerland
-  5. **Russian (`ru`)** — Eastern Europe, CIS
-  6. **Simplified Chinese (`zh`)** — Greater China, Singapore
-  7. **Japanese (`ja`)** — Japan
-  8. **Brazilian Portuguese (`pt`)** — Brazil, Portugal
-  9. **Korean (`ko`)** — South Korea
-  10. **Italian (`it`)** — Italy
-  11. **Turkish (`tr`)** — Turkey
-  12. **Arabic (`ar`)** — MENA, GCC (RTL support)
-* **Zero Hardcoded Strings:** No raw user-facing text strings are permitted in React Native views or components. All copy must be resolved through `t('key')` exported from `src/i18n/index.ts`.
-* **Automatic Device Language Resolution:** Locale is dynamically detected on app launch using `expo-localization` (`Localization.getLocales()[0]?.languageCode`). If the user's device is set to an unsupported language, the app cleanly falls back to English (`en`).
-* **Feature Expansion Directives:** Whenever any new UI component, modal, toast, alert, error message, or workflow is introduced, the developer or AI agent MUST add corresponding translation strings for all 12 supported languages in `src/i18n/index.ts`. PRs with missing locale keys or hardcoded English strings will be rejected.
+## 6. Localization
 
+Governed by `docs/agents/12-product-standards.md` §16.1 in the portfolio root.
+Fourteen locales, ten of them mandatory, with RTL layout required for Persian
+(`fa`) and Arabic (`ar`). Do not restate the locale list here — it drifted once
+already.
+
+Use `scripts/add-i18n-keys.mjs` from the portfolio root to add a key; it refuses
+to write a partial set, so a key cannot ship English to a market by accident.
