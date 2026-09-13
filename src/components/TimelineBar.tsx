@@ -3,6 +3,7 @@ import { View, Text, ScrollView } from 'react-native';
 import { Scissors, Film } from 'lucide-react-native';
 import { useVideoStore } from '../store/useVideoStore';
 import { t } from '../i18n';
+import { useTheme } from '../theme/useTheme';
 
 const formatSeconds = (sec: number): string => {
   const m = Math.floor(sec / 60);
@@ -11,6 +12,7 @@ const formatSeconds = (sec: number): string => {
 };
 
 export const TimelineBar: React.FC = () => {
+  const theme = useTheme();
   const { segments, video } = useVideoStore();
 
   if (!video || segments.length === 0) return null;
@@ -19,18 +21,18 @@ export const TimelineBar: React.FC = () => {
     <View className="w-full my-3">
       <View className="flex-row items-center justify-between mb-2">
         <View className="flex-row items-center">
-          <Scissors size={14} color="#60A5FA" />
-          <Text className="text-xs font-semibold uppercase tracking-wider text-slate-300 ml-1.5">
+          <Scissors size={14} color={theme.primary} />
+          <Text className="text-xs font-semibold uppercase tracking-wider ml-1.5" style={{ color: theme.textSecondary }}>
             {t('outputClips', { count: segments.length })}
           </Text>
         </View>
-        <Text className="text-xs text-slate-400">
+        <Text className="text-xs" style={{ color: theme.textSecondary }}>
           {t('totalDuration', { duration: formatSeconds(video.duration) })}
         </Text>
       </View>
 
       {/* Visual Segment Timeline Strip */}
-      <View className="h-4 w-full bg-slate-900 rounded-full overflow-hidden flex-row border border-slate-800 my-2">
+      <View className="h-4 w-full rounded-full overflow-hidden flex-row border my-2" style={{ backgroundColor: theme.card, borderColor: theme.cardBorder }}>
         {segments.map((seg, idx) => {
           const widthPercent = (seg.duration / video.duration) * 100;
           const isEven = idx % 2 === 0;
@@ -56,18 +58,18 @@ export const TimelineBar: React.FC = () => {
         {segments.map((seg) => (
           <View
             key={seg.id}
-            className="bg-slate-900 border border-slate-800 px-3 py-2 rounded-xl min-w-[100px] items-center"
+            className="border px-3 py-2 rounded-xl min-w-[100px] items-center" style={{ backgroundColor: theme.card, borderColor: theme.cardBorder }}
           >
             <View className="flex-row items-center mb-1">
-              <Film size={12} color="#94A3B8" />
-              <Text className="text-xs font-bold text-white ml-1">
+              <Film size={12} color={theme.textMuted} />
+              <Text className="text-xs font-bold ml-1" style={{ color: theme.text }}>
                 {t('partIndex', { index: seg.index })}
               </Text>
             </View>
-            <Text className="text-xs font-mono text-blue-400">
+            <Text className="text-xs font-mono" style={{ color: theme.primary }}>
               {formatSeconds(seg.startTime)} - {formatSeconds(seg.endTime)}
             </Text>
-            <Text className="text-[10px] text-slate-500 mt-0.5">
+            <Text className="text-[10px] mt-0.5" style={{ color: theme.textMuted }}>
               {t('partDuration', { duration: seg.duration.toFixed(0) })}
             </Text>
           </View>

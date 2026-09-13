@@ -4,12 +4,14 @@ import * as Haptics from 'expo-haptics';
 import { MessageCircle, Camera, Video, Sliders, Lock } from 'lucide-react-native';
 import { useVideoStore, PresetType } from '../store/useVideoStore';
 import { t } from '../i18n';
+import { useTheme } from '../theme/useTheme';
 
 interface PresetSelectorProps {
   onRequirePro?: () => void;
 }
 
 export const PresetSelector: React.FC<PresetSelectorProps> = ({ onRequirePro }) => {
+  const theme = useTheme();
   const { preset, customDuration, isPro, setPreset, setCustomDuration } = useVideoStore();
 
   const presets: Array<{
@@ -41,7 +43,7 @@ export const PresetSelector: React.FC<PresetSelectorProps> = ({ onRequirePro }) 
       id: 'custom',
       label: t('presetCustom'),
       durationLabel: `${customDuration}s`,
-      icon: <Sliders size={18} color="#A855F7" />,
+      icon: <Sliders size={18} color={theme.purple} />,
       isProOnly: true,
     },
   ];
@@ -57,7 +59,7 @@ export const PresetSelector: React.FC<PresetSelectorProps> = ({ onRequirePro }) 
 
   return (
     <View className="w-full my-4">
-      <Text className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
+      <Text className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: theme.textSecondary }}>
         {t('selectPreset')}
       </Text>
       <View className="flex-row flex-wrap gap-2">
@@ -68,23 +70,23 @@ export const PresetSelector: React.FC<PresetSelectorProps> = ({ onRequirePro }) 
               key={p.id}
               onPress={() => handleSelect(p.id, p.isProOnly)}
               activeOpacity={0.8}
-              className={`flex-1 min-w-[45%] p-3.5 rounded-xl border flex-row items-center justify-between ${
-                isSelected
-                  ? 'bg-blue-950/60 border-blue-500'
-                  : 'bg-slate-900/80 border-slate-800'
-              }`}
+              className="flex-1 min-w-[45%] p-3.5 rounded-xl border flex-row items-center justify-between"
+              style={{
+                backgroundColor: isSelected ? theme.primaryLight : theme.card,
+                borderColor: isSelected ? theme.primary : theme.cardBorder,
+              }}
             >
               <View className="flex-row items-center gap-2.5">
                 {p.icon}
                 <View className="ml-2">
-                  <Text className="text-white text-sm font-semibold">{p.label}</Text>
-                  <Text className="text-slate-400 text-xs mt-0.5">{p.durationLabel}</Text>
+                  <Text className="text-sm font-semibold" style={{ color: theme.text }}>{p.label}</Text>
+                  <Text className="text-xs mt-0.5" style={{ color: theme.textSecondary }}>{p.durationLabel}</Text>
                 </View>
               </View>
               {p.isProOnly && !isPro && (
                 <View className="bg-amber-500/20 px-1.5 py-0.5 rounded flex-row items-center">
-                  <Lock size={12} color="#F59E0B" />
-                  <Text className="text-amber-400 text-[10px] font-bold ml-1">{t('proBadge')}</Text>
+                  <Lock size={12} color={theme.warning} />
+                  <Text className="text-[10px] font-bold ml-1" style={{ color: theme.warning }}>{t('proBadge')}</Text>
                 </View>
               )}
             </TouchableOpacity>
@@ -93,11 +95,11 @@ export const PresetSelector: React.FC<PresetSelectorProps> = ({ onRequirePro }) 
       </View>
 
       {preset === 'custom' && (
-        <View className="mt-3 p-3 bg-slate-900 border border-slate-800 rounded-xl flex-row items-center justify-between">
-          <Text className="text-slate-300 text-sm">{t('cutEachClipTo')}</Text>
+        <View className="mt-3 p-3 border rounded-xl flex-row items-center justify-between" style={{ backgroundColor: theme.card, borderColor: theme.cardBorder }}>
+          <Text className="text-sm" style={{ color: theme.textSecondary }}>{t('cutEachClipTo')}</Text>
           <View className="flex-row items-center">
             <TextInput
-              className="bg-slate-950 text-white font-bold text-center px-3 py-1.5 rounded-lg border border-slate-700 w-16"
+              className="font-bold text-center px-3 py-1.5 rounded-lg border w-16" style={{ backgroundColor: theme.background, color: theme.text, borderColor: theme.cardBorder }}
               keyboardType="number-pad"
               value={String(customDuration)}
               onChangeText={(val) => {
@@ -106,7 +108,7 @@ export const PresetSelector: React.FC<PresetSelectorProps> = ({ onRequirePro }) 
               }}
               maxLength={3}
             />
-            <Text className="text-slate-400 text-sm ml-2">{t('seconds')}</Text>
+            <Text className="text-sm ml-2" style={{ color: theme.textSecondary }}>{t('seconds')}</Text>
           </View>
         </View>
       )}

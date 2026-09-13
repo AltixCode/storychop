@@ -17,6 +17,7 @@ import {
 import { useVideoStore } from '../src/store/useVideoStore';
 import { t } from '../src/i18n';
 import { ForwardArrow } from '../src/components/DirectionalIcons';
+import { useTheme } from '../src/theme/useTheme';
 
 const formatDuration = (seconds: number): string => {
   const m = Math.floor(seconds / 60);
@@ -31,6 +32,7 @@ const formatBytes = (bytes?: number): string => {
 };
 
 export default function HomeScreen() {
+  const theme = useTheme();
   const router = useRouter();
   const { video, setVideo } = useVideoStore();
   const [isPicking, setIsPicking] = useState(false);
@@ -66,65 +68,65 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView edges={['bottom']} className="flex-1 bg-slate-950 px-5">
+    <SafeAreaView edges={['bottom']} className="flex-1 px-5" style={{ backgroundColor: theme.background }}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 24 }}>
         {/* Hero Section */}
         <View className="mt-4 mb-6">
           <View className="inline-flex self-start bg-blue-500/10 border border-blue-500/30 px-3 py-1 rounded-full mb-3 flex-row items-center">
-            <Sparkles size={12} color="#60A5FA" />
-            <Text className="text-blue-400 text-xs font-semibold ml-1.5">
+            <Sparkles size={12} color={theme.primary} />
+            <Text className="text-xs font-semibold ml-1.5" style={{ color: theme.primary }}>
               {t('heroBadge')}
             </Text>
           </View>
-          <Text className="text-3xl font-extrabold text-white tracking-tight">
+          <Text className="text-3xl font-extrabold tracking-tight" style={{ color: theme.text }}>
             {t('heroTitle')}
           </Text>
-          <Text className="text-slate-400 text-sm mt-1.5 leading-relaxed">
+          <Text className="text-sm mt-1.5 leading-relaxed" style={{ color: theme.textSecondary }}>
             {t('heroSubtitle')}
           </Text>
         </View>
 
         {/* Video Selector Card */}
         {video ? (
-          <View className="bg-slate-900 border border-slate-800 rounded-2xl p-5 mb-6">
-            <View className="flex-row items-center justify-between mb-4 pb-3 border-b border-slate-800">
+          <View className="border rounded-2xl p-5 mb-6" style={{ backgroundColor: theme.card, borderColor: theme.cardBorder }}>
+            <View className="flex-row items-center justify-between mb-4 pb-3 border-b" style={{ borderColor: theme.cardBorder }}>
               <View className="flex-row items-center gap-2">
                 <View className="bg-blue-600/20 p-2 rounded-xl">
-                  <Film size={20} color="#60A5FA" />
+                  <Film size={20} color={theme.primary} />
                 </View>
-                <Text className="text-white font-bold text-base ml-2">{t('selectedVideo')}</Text>
+                <Text className="font-bold text-base ml-2" style={{ color: theme.text }}>{t('selectedVideo')}</Text>
               </View>
               <TouchableOpacity
                 onPress={handlePickVideo}
-                className="flex-row items-center bg-slate-800 px-3 py-1.5 rounded-lg"
+                className="flex-row items-center px-3 py-1.5 rounded-lg" style={{ backgroundColor: theme.controlSurface }}
               >
-                <RefreshCw size={13} color="#94A3B8" />
-                <Text className="text-slate-300 text-xs font-medium ml-1.5">{t('change')}</Text>
+                <RefreshCw size={13} color={theme.textMuted} />
+                <Text className="text-xs font-medium ml-1.5" style={{ color: theme.textSecondary }}>{t('change')}</Text>
               </TouchableOpacity>
             </View>
 
             {/* Metadata Badges */}
             <View className="flex-row flex-wrap gap-2 mb-4">
-              <View className="bg-slate-950 border border-slate-800 px-3 py-2 rounded-xl flex-1 min-w-[30%] items-center">
-                <Clock size={14} color="#60A5FA" />
-                <Text className="text-slate-400 text-[10px] uppercase font-bold mt-1">{t('duration')}</Text>
-                <Text className="text-white text-xs font-bold mt-0.5">
+              <View className="border px-3 py-2 rounded-xl flex-1 min-w-[30%] items-center" style={{ backgroundColor: theme.background, borderColor: theme.cardBorder }}>
+                <Clock size={14} color={theme.primary} />
+                <Text className="text-[10px] uppercase font-bold mt-1" style={{ color: theme.textSecondary }}>{t('duration')}</Text>
+                <Text className="text-xs font-bold mt-0.5" style={{ color: theme.text }}>
                   {formatDuration(video.duration)}
                 </Text>
               </View>
 
-              <View className="bg-slate-950 border border-slate-800 px-3 py-2 rounded-xl flex-1 min-w-[30%] items-center">
-                <Maximize2 size={14} color="#34D399" />
-                <Text className="text-slate-400 text-[10px] uppercase font-bold mt-1">{t('resolution')}</Text>
-                <Text className="text-white text-xs font-bold mt-0.5">
+              <View className="border px-3 py-2 rounded-xl flex-1 min-w-[30%] items-center" style={{ backgroundColor: theme.background, borderColor: theme.cardBorder }}>
+                <Maximize2 size={14} color={theme.success} />
+                <Text className="text-[10px] uppercase font-bold mt-1" style={{ color: theme.textSecondary }}>{t('resolution')}</Text>
+                <Text className="text-xs font-bold mt-0.5" style={{ color: theme.text }}>
                   {video.width}×{video.height}
                 </Text>
               </View>
 
-              <View className="bg-slate-950 border border-slate-800 px-3 py-2 rounded-xl flex-1 min-w-[30%] items-center">
-                <HardDrive size={14} color="#FBBF24" />
-                <Text className="text-slate-400 text-[10px] uppercase font-bold mt-1">{t('size')}</Text>
-                <Text className="text-white text-xs font-bold mt-0.5">
+              <View className="border px-3 py-2 rounded-xl flex-1 min-w-[30%] items-center" style={{ backgroundColor: theme.background, borderColor: theme.cardBorder }}>
+                <HardDrive size={14} color={theme.warning} />
+                <Text className="text-[10px] uppercase font-bold mt-1" style={{ color: theme.textSecondary }}>{t('size')}</Text>
+                <Text className="text-xs font-bold mt-0.5" style={{ color: theme.text }}>
                   {formatBytes(video.fileSize)}
                 </Text>
               </View>
@@ -135,8 +137,8 @@ export default function HomeScreen() {
               onPress={() => router.push('/trim')}
               className="bg-blue-600 active:bg-blue-500 py-3.5 px-4 rounded-xl flex-row items-center justify-center"
             >
-              <Text className="text-white font-bold text-base mr-2">{t('configureSplit')}</Text>
-              <ForwardArrow size={18} color="#FFFFFF" />
+              <Text className="font-bold text-base mr-2" style={{ color: theme.onPrimary }}>{t('configureSplit')}</Text>
+              <ForwardArrow size={18} color={theme.onPrimary} />
             </TouchableOpacity>
           </View>
         ) : (
@@ -144,15 +146,15 @@ export default function HomeScreen() {
             onPress={handlePickVideo}
             disabled={isPicking}
             activeOpacity={0.85}
-            className="border-2 border-dashed border-slate-700 bg-slate-900/40 rounded-3xl p-8 items-center justify-center my-2"
+            className="border-2 border-dashed rounded-3xl p-8 items-center justify-center my-2" style={{ borderColor: theme.cardBorder, backgroundColor: theme.card }}
           >
             <View className="bg-blue-500/10 border border-blue-500/20 p-5 rounded-full mb-4">
-              <Film size={36} color="#60A5FA" />
+              <Film size={36} color={theme.primary} />
             </View>
-            <Text className="text-white font-bold text-lg text-center mb-1">
+            <Text className="font-bold text-lg text-center mb-1" style={{ color: theme.text }}>
               {t('selectVideoPrompt')}
             </Text>
-            <Text className="text-slate-400 text-xs text-center max-w-xs leading-relaxed">
+            <Text className="text-xs text-center max-w-xs leading-relaxed" style={{ color: theme.textSecondary }}>
               {t('selectVideoDesc')}
             </Text>
           </TouchableOpacity>
@@ -160,29 +162,29 @@ export default function HomeScreen() {
 
         {/* Core Architectural Guarantees */}
         <View className="mt-6 flex-col gap-3">
-          <Text className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
+          <Text className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: theme.textMuted }}>
             {t('archGuarantees')}
           </Text>
 
-          <View className="bg-slate-900/60 border border-slate-800/80 p-4 rounded-2xl flex-row items-start mb-3">
+          <View className="border p-4 rounded-2xl flex-row items-start mb-3" style={{ backgroundColor: theme.card, borderColor: theme.cardBorder }}>
             <View className="bg-blue-500/10 p-2 rounded-xl mr-3">
-              <Zap size={18} color="#60A5FA" />
+              <Zap size={18} color={theme.primary} />
             </View>
             <View className="flex-1">
-              <Text className="text-white font-bold text-sm">{t('streamCopyTitle')}</Text>
-              <Text className="text-slate-400 text-xs mt-0.5 leading-relaxed">
+              <Text className="font-bold text-sm" style={{ color: theme.text }}>{t('streamCopyTitle')}</Text>
+              <Text className="text-xs mt-0.5 leading-relaxed" style={{ color: theme.textSecondary }}>
                 {t('streamCopyDesc')}
               </Text>
             </View>
           </View>
 
-          <View className="bg-slate-900/60 border border-slate-800/80 p-4 rounded-2xl flex-row items-start mb-3">
+          <View className="border p-4 rounded-2xl flex-row items-start mb-3" style={{ backgroundColor: theme.card, borderColor: theme.cardBorder }}>
             <View className="bg-emerald-500/10 p-2 rounded-xl mr-3">
-              <ShieldCheck size={18} color="#34D399" />
+              <ShieldCheck size={18} color={theme.success} />
             </View>
             <View className="flex-1">
-              <Text className="text-white font-bold text-sm">{t('privacyTitle')}</Text>
-              <Text className="text-slate-400 text-xs mt-0.5 leading-relaxed">
+              <Text className="font-bold text-sm" style={{ color: theme.text }}>{t('privacyTitle')}</Text>
+              <Text className="text-xs mt-0.5 leading-relaxed" style={{ color: theme.textSecondary }}>
                 {t('privacyDesc')}
               </Text>
             </View>

@@ -14,8 +14,10 @@ import { PaywallModal } from '../src/components/PaywallModal';
 import { usePaywall } from '../src/hooks/usePaywall';
 import { t } from '../src/i18n';
 import { ForwardArrow } from '../src/components/DirectionalIcons';
+import { useTheme } from '../src/theme/useTheme';
 
 export default function TrimScreen() {
+  const theme = useTheme();
   const { priceString } = usePaywall(() => undefined);
   const router = useRouter();
   const {
@@ -46,7 +48,7 @@ export default function TrimScreen() {
   };
 
   return (
-    <View className="flex-1 bg-slate-950 px-5">
+    <View className="flex-1 px-5" style={{ backgroundColor: theme.background }}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
         {/* Preset Selector */}
         <PresetSelector onRequirePro={() => setPaywallVisible(true)} />
@@ -57,9 +59,9 @@ export default function TrimScreen() {
         {/* Long Video Gating Alert if > 3 min and Free */}
         {isLongVideo && !isPro && (
           <View className="bg-amber-950/40 border border-amber-500/40 p-4 rounded-2xl my-3 flex-row items-start">
-            <AlertCircle size={18} color="#F59E0B" />
+            <AlertCircle size={18} color={theme.warning} />
             <View className="flex-1 ml-3">
-              <Text className="text-amber-300 font-bold text-sm">{t('longVideoDetected')}</Text>
+              <Text className="font-bold text-sm" style={{ color: theme.warning }}>{t('longVideoDetected')}</Text>
               <Text className="text-amber-200/80 text-xs mt-0.5 leading-relaxed">
                 {t('longVideoDesc')}
               </Text>
@@ -67,21 +69,21 @@ export default function TrimScreen() {
                 onPress={() => setPaywallVisible(true)}
                 className="mt-2 bg-amber-500/20 self-start px-3 py-1 rounded-lg border border-amber-500/30"
               >
-                <Text className="text-amber-400 text-xs font-bold">{t('unlockPro', { price: priceString ?? '' })}</Text>
+                <Text className="text-xs font-bold" style={{ color: theme.warning }}>{t('unlockPro', { price: priceString ?? '' })}</Text>
               </TouchableOpacity>
             </View>
           </View>
         )}
 
         {/* Reverse Order Export Toggle (Pro) */}
-        <View className="bg-slate-900 border border-slate-800 p-4 rounded-2xl my-2 flex-row items-center justify-between">
+        <View className="border p-4 rounded-2xl my-2 flex-row items-center justify-between" style={{ backgroundColor: theme.card, borderColor: theme.cardBorder }}>
           <View className="flex-row items-center flex-1 mr-3">
-            <View className="bg-slate-800 p-2 rounded-xl mr-3">
-              <ArrowDownUp size={18} color="#60A5FA" />
+            <View className="p-2 rounded-xl mr-3" style={{ backgroundColor: theme.controlSurface }}>
+              <ArrowDownUp size={18} color={theme.primary} />
             </View>
             <View className="flex-1">
-              <Text className="text-white font-bold text-sm">{t('reverseExportOrder')}</Text>
-              <Text className="text-slate-400 text-xs mt-0.5">
+              <Text className="font-bold text-sm" style={{ color: theme.text }}>{t('reverseExportOrder')}</Text>
+              <Text className="text-xs mt-0.5" style={{ color: theme.textSecondary }}>
                 {t('reverseExportOrderDesc')}
               </Text>
             </View>
@@ -107,11 +109,11 @@ export default function TrimScreen() {
           activeOpacity={0.85}
           className="mt-6 bg-blue-600 active:bg-blue-500 p-4 rounded-2xl flex-row items-center justify-center shadow-lg shadow-blue-500/20"
         >
-          <Scissors size={20} color="#FFFFFF" />
-          <Text className="text-white font-bold text-base ml-2 mr-2">
+          <Scissors size={20} color={theme.onPrimary} />
+          <Text className="font-bold text-base ml-2 mr-2" style={{ color: theme.onPrimary }}>
             {t('exportClips', { count: segments.length })}
           </Text>
-          <ForwardArrow size={18} color="#FFFFFF" />
+          <ForwardArrow size={18} color={theme.onPrimary} />
         </TouchableOpacity>
       </ScrollView>
 
