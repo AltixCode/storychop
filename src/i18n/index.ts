@@ -32,6 +32,7 @@ export const SUPPORTED_LANGUAGES: SupportedLanguage[] = [
 export const translations = {
   "en": {
     "proBadge": "PRO",
+    "clipLengths": "Clip lengths: {lengths}",
     "lifetimeAccess": "Unlock Lifetime Access — {price}",
     "lifetimeAccessPlain": "Unlock Lifetime Access",
     "storeUnavailable": "The store is unreachable right now. Check your connection and try again.",
@@ -113,6 +114,7 @@ export const translations = {
   },
   "es": {
     "proBadge": "PRO",
+    "clipLengths": "Duración de los clips: {lengths}",
     "lifetimeAccess": "Desbloquear Acceso Vitalicio — {price}",
     "lifetimeAccessPlain": "Desbloquear Acceso Vitalicio",
     "storeUnavailable": "La tienda no está disponible ahora. Revisa tu conexión e inténtalo de nuevo.",
@@ -194,6 +196,7 @@ export const translations = {
   },
   "fr": {
     "proBadge": "PRO",
+    "clipLengths": "Durée des clips : {lengths}",
     "lifetimeAccess": "Débloquer l'Accès à Vie — {price}",
     "lifetimeAccessPlain": "Débloquer l'Accès à Vie",
     "storeUnavailable": "La boutique est injoignable pour le moment. Vérifiez votre connexion et réessayez.",
@@ -275,6 +278,7 @@ export const translations = {
   },
   "de": {
     "proBadge": "PRO",
+    "clipLengths": "Cliplängen: {lengths}",
     "lifetimeAccess": "Lebenslangen Zugriff Freischalten — {price}",
     "lifetimeAccessPlain": "Lebenslangen Zugriff Freischalten",
     "storeUnavailable": "Der Store ist derzeit nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.",
@@ -356,6 +360,7 @@ export const translations = {
   },
   "ru": {
     "proBadge": "PRO",
+    "clipLengths": "Длительность клипов: {lengths}",
     "lifetimeAccess": "Разблокировать Навсегда — {price}",
     "lifetimeAccessPlain": "Разблокировать Навсегда",
     "storeUnavailable": "Магазин сейчас недоступен. Проверьте подключение и повторите попытку.",
@@ -437,6 +442,7 @@ export const translations = {
   },
   "zh": {
     "proBadge": "PRO",
+    "clipLengths": "片段时长：{lengths}",
     "lifetimeAccess": "解锁永久买断版 — {price}",
     "lifetimeAccessPlain": "解锁永久买断版",
     "storeUnavailable": "目前无法连接到商店。请检查网络连接后重试。",
@@ -518,6 +524,7 @@ export const translations = {
   },
   "ja": {
     "proBadge": "PRO",
+    "clipLengths": "クリップの長さ: {lengths}",
     "lifetimeAccess": "買い切り版を解除 — {price}",
     "lifetimeAccessPlain": "買い切り版を解除",
     "storeUnavailable": "現在ストアに接続できません。通信状況を確認して再試行してください。",
@@ -599,6 +606,7 @@ export const translations = {
   },
   "pt": {
     "proBadge": "PRO",
+    "clipLengths": "Duração dos clipes: {lengths}",
     "lifetimeAccess": "Desbloquear Acesso Vitalício — {price}",
     "lifetimeAccessPlain": "Desbloquear Acesso Vitalício",
     "storeUnavailable": "A loja está indisponível no momento. Verifique sua conexão e tente novamente.",
@@ -680,6 +688,7 @@ export const translations = {
   },
   "ko": {
     "proBadge": "PRO",
+    "clipLengths": "클립 길이: {lengths}",
     "lifetimeAccess": "평생 이용권 잠금 해제 — {price}",
     "lifetimeAccessPlain": "평생 이용권 잠금 해제",
     "storeUnavailable": "지금은 스토어에 연결할 수 없습니다. 연결 상태를 확인한 후 다시 시도하세요.",
@@ -761,6 +770,7 @@ export const translations = {
   },
   "it": {
     "proBadge": "PRO",
+    "clipLengths": "Durata dei clip: {lengths}",
     "lifetimeAccess": "Sblocca Accesso a Vita — {price}",
     "lifetimeAccessPlain": "Sblocca Accesso a Vita",
     "storeUnavailable": "Lo store non è raggiungibile in questo momento. Controlla la connessione e riprova.",
@@ -842,6 +852,7 @@ export const translations = {
   },
   "tr": {
     "proBadge": "PRO",
+    "clipLengths": "Klip süreleri: {lengths}",
     "lifetimeAccess": "Ömür Boyu Erişimi Aç — {price}",
     "lifetimeAccessPlain": "Ömür Boyu Erişimi Aç",
     "storeUnavailable": "Mağazaya şu anda ulaşılamıyor. Bağlantınızı kontrol edip tekrar deneyin.",
@@ -923,6 +934,7 @@ export const translations = {
   },
   "ar": {
     "proBadge": "احترافي",
+    "clipLengths": "مدد المقاطع: {lengths}",
     "lifetimeAccess": "فتح الوصول مدى الحياة — {price}",
     "lifetimeAccessPlain": "فتح الوصول مدى الحياة",
     "storeUnavailable": "يتعذّر الوصول إلى المتجر حاليًا. تحقّق من اتصالك وحاول مرة أخرى.",

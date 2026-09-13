@@ -1,0 +1,72 @@
+appId: com.altixcode.storychop
+name: Split a video end to end
+---
+# The fixture is 30s with a distinct colour and number per second, so a wrong
+# start offset or a full-length copy is obvious in the written clips rather
+# than only in a progress bar.
+- launchApp:
+    clearState: false
+- runFlow:
+    when:
+      visible: "Open"
+    commands:
+      - tapOn: "Cancel"
+- takeScreenshot: artifacts/01-home
+
+- tapOn: ".*(Select Video|Choose Video|Import).*"
+- extendedWaitUntil:
+    visible: ".*(Recents|Photos|All Photos|Videos|Library).*"
+    timeout: 25000
+# The cell and its grid container carry an identical accessibility label, so
+# an index-based match is ambiguous. The first cell occupies [0,140]-[132,273]
+# in a 402x874 viewport.
+# Absolute points, not percentages: a percentage tap reported COMPLETED but
+# never selected the cell, while the same location as absolute coordinates
+# works. The first cell occupies [0,140]-[132,273] in a 402x874 viewport.
+# Wait for the grid to populate: tapping as soon as the picker chrome appears
+# lands before the cells exist and silently does nothing.
+- extendedWaitUntil:
+    visible: "Video, .*"
+    timeout: 25000
+# The grid container and the cell carry an identical accessibility label; the
+# container is listed first and its centre falls in empty space beside the
+# single cell, so index 1 is the cell itself.
+# Let the grid finish laying out. The container carries the same accessibility
+# label as its cells and appears first, so waiting on the label alone returns
+# before any cell exists and the tap lands in empty space beside it.
+- waitForAnimationToEnd:
+    timeout: 8000
+- tapOn:
+    point: "64,206"
+
+# Anchor on the loaded-state card, not a loose word: ".*Split.*" matched the
+# hero subtitle ("Split long 4K videos") and passed on the empty home screen.
+- extendedWaitUntil:
+    visible: ".*Selected Video.*"
+    timeout: 45000
+- takeScreenshot: artifacts/02-loaded
+- tapOn: ".*Configure Split.*"
+- extendedWaitUntil:
+    visible: ".*(WhatsApp|Instagram|TikTok).*"
+    timeout: 30000
+# WhatsApp's 30s preset splits the 95s fixture into four parts, so the export
+# exercises real cutting. A preset longer than the source yields a single
+# full-length clip, which cannot distinguish a trim from a copy.
+- tapOn: ".*WhatsApp.*"
+- takeScreenshot: artifacts/03-presets
+
+# Export, then read back the per-clip durations the completion screen reports.
+# A full-length copy of a 30s source would show 30.0s for every clip; real
+# segments must differ from that and from each other's offsets.
+# Anchor on the button's full copy. ".*Export.*" also matches the
+# "Reverse Export Order" row and toggles it instead of starting the export.
+- scrollUntilVisible:
+    element:
+      text: ".*Export \\d+ Clips.*"
+    direction: DOWN
+    timeout: 20000
+- tapOn: ".*Export \\d+ Clips.*"
+- extendedWaitUntil:
+    visible: ".*Clip lengths.*"
+    timeout: 120000
+- takeScreenshot: artifacts/04-exported

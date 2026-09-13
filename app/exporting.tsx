@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { CheckCircle2, XCircle, Film, Sparkles, ArrowLeft, RotateCcw } from 'lucide-react-native';
 import { useVideoStore } from '../src/store/useVideoStore';
-import { executeVideoSlicing } from '../src/services/ffmpeg';
+import { executeVideoSlicing } from '../src/engine/videoSlicer';
 import { t } from '../src/i18n';
 
 export default function ExportingScreen() {
@@ -20,6 +20,7 @@ export default function ExportingScreen() {
   } = useVideoStore();
 
   const [isDone, setIsDone] = useState(false);
+  const [clipDurations, setClipDurations] = useState<number[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const isCanceledRef = useRef(false);
 
@@ -42,12 +43,16 @@ export default function ExportingScreen() {
           if (!isMounted || isCanceledRef.current) return;
           setExportProgress(progress, currentIdx);
         },
-        reverseExportOrder
+        reverseExportOrder,
+        () => isCanceledRef.current,
       );
 
       if (!isMounted || isCanceledRef.current) return;
 
       if (result.success) {
+        // Surfaced so the user can confirm the clips really differ in length —
+        // the previous build silently produced N copies of the whole video.
+        setClipDurations(result.durations);
         setIsDone(true);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       } else {
@@ -90,13 +95,17 @@ export default function ExportingScreen() {
             {t('allClipsSaved')}
           </Text>
           <Text className="text-slate-400 text-sm text-center max-w-xs leading-relaxed mb-6">
-            {t('allClipsSavedDesc', { count: segments.length })}
+            {t('allClipsSavedDesc', { count: clipDurations.length || segments.length })}
           </Text>
 
           <View className="bg-slate-900 border border-slate-800 p-4 rounded-2xl w-full mb-8 flex-row items-center">
             <Sparkles size={20} color="#60A5FA" />
             <Text className="text-slate-300 text-xs ml-3 flex-1">
-              {t('qualityPreserved')}
+              {clipDurations.length > 0
+                ? t('clipLengths', {
+                    lengths: clipDurations.map((d) => `${d.toFixed(1)}s`).join(', '),
+                  })
+                : t('qualityPreserved')}
             </Text>
           </View>
 
