@@ -14,9 +14,16 @@ name: Split a video end to end
 - takeScreenshot: artifacts/01-home
 
 - tapOn: ".*(Select Video|Choose Video|Import).*"
+# Anchor on the picker's own scroll view, not on visible text. A text wait like
+# ".*Photos.*" is also satisfied by the app's own import button, so it passes
+# instantly and the taps below fire while the picker is still presenting --
+# they report COMPLETED and select nothing.
 - extendedWaitUntil:
-    visible: ".*(Recents|Photos|All Photos|Videos|Library).*"
-    timeout: 25000
+    visible:
+      id: "photosView_content_scroll_view"
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 8000
 # The cell and its grid container carry an identical accessibility label, so
 # an index-based match is ambiguous. The first cell occupies [0,140]-[132,273]
 # in a 402x874 viewport.
