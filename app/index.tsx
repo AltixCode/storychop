@@ -9,7 +9,6 @@ import {
   Sparkles,
   Zap,
   ShieldCheck,
-  ArrowRight,
   Clock,
   Maximize2,
   HardDrive,
@@ -17,6 +16,7 @@ import {
 } from 'lucide-react-native';
 import { useVideoStore } from '../src/store/useVideoStore';
 import { t } from '../src/i18n';
+import { ForwardArrow } from '../src/components/DirectionalIcons';
 
 const formatDuration = (seconds: number): string => {
   const m = Math.floor(seconds / 60);
@@ -136,7 +136,7 @@ export default function HomeScreen() {
               className="bg-blue-600 active:bg-blue-500 py-3.5 px-4 rounded-xl flex-row items-center justify-center"
             >
               <Text className="text-white font-bold text-base mr-2">{t('configureSplit')}</Text>
-              <ArrowRight size={18} color="#FFFFFF" />
+              <ForwardArrow size={18} color="#FFFFFF" />
             </TouchableOpacity>
           </View>
         ) : (

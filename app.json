@@ -19,7 +19,24 @@
       "buildNumber": "1",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "StoryChop needs photo library access to select and export video clips.",
-        "NSPhotoLibraryAddUsageDescription": "StoryChop saves split video clips directly to your photo library."
+        "NSPhotoLibraryAddUsageDescription": "StoryChop saves split video clips directly to your photo library.",
+        "CFBundleLocalizations": [
+          "en",
+          "es",
+          "fr",
+          "de",
+          "ru",
+          "zh",
+          "ja",
+          "pt",
+          "ko",
+          "it",
+          "tr",
+          "ar",
+          "fa",
+          "el"
+        ],
+        "CFBundleDevelopmentRegion": "en"
       }
     },
     "android": {

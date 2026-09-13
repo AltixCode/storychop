@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Switch } from 'react-native';
 import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
-import { Scissors, ArrowRight, ArrowDownUp, AlertCircle } from 'lucide-react-native';
+import {
+  Scissors,
+  ArrowDownUp,
+  AlertCircle,
+} from 'lucide-react-native';
 import { useVideoStore } from '../src/store/useVideoStore';
 import { PresetSelector } from '../src/components/PresetSelector';
 import { TimelineBar } from '../src/components/TimelineBar';
 import { PaywallModal } from '../src/components/PaywallModal';
 import { usePaywall } from '../src/hooks/usePaywall';
 import { t } from '../src/i18n';
+import { ForwardArrow } from '../src/components/DirectionalIcons';
 
 export default function TrimScreen() {
   const { priceString } = usePaywall(() => undefined);
@@ -106,7 +111,7 @@ export default function TrimScreen() {
           <Text className="text-white font-bold text-base ml-2 mr-2">
             {t('exportClips', { count: segments.length })}
           </Text>
-          <ArrowRight size={18} color="#FFFFFF" />
+          <ForwardArrow size={18} color="#FFFFFF" />
         </TouchableOpacity>
       </ScrollView>
 
