@@ -1,0 +1,52 @@
+appId: com.altixcode.storychop
+name: Store screenshots
+---
+# Driven over the real 95s fixture so the clip list and durations on screen are
+# what the engine actually produced.
+- launchApp:
+    clearState: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- takeScreenshot: 01-hero
+
+- tapOn: ".*(Select Video|Choose Video|Import).*"
+- extendedWaitUntil:
+    visible:
+      id: "photosView_content_scroll_view"
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 8000
+- extendedWaitUntil:
+    visible: "Video, .*"
+    timeout: 25000
+- waitForAnimationToEnd:
+    timeout: 6000
+- tapOn:
+    point: "17%,23%"
+- extendedWaitUntil:
+    visible: ".*Selected Video.*"
+    timeout: 45000
+- waitForAnimationToEnd:
+    timeout: 3000
+- takeScreenshot: 02-loaded
+
+- tapOn: ".*Configure Split.*"
+- extendedWaitUntil:
+    visible: ".*(WhatsApp|Instagram|TikTok).*"
+    timeout: 25000
+- tapOn: ".*WhatsApp.*"
+- waitForAnimationToEnd:
+    timeout: 2500
+- takeScreenshot: 03-presets
+- scrollUntilVisible:
+    element:
+      text: ".*Export \\d+ Clips.*"
+    direction: DOWN
+    timeout: 20000
+- tapOn: ".*Export \\d+ Clips.*"
+- extendedWaitUntil:
+    visible: ".*Clip lengths.*"
+    timeout: 300000
+- waitForAnimationToEnd:
+    timeout: 3000
+- takeScreenshot: 04-exported

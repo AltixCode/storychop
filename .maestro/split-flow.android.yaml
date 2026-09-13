@@ -1,0 +1,44 @@
+appId: com.altixcode.storychop
+name: Split a video into story-length clips (Android)
+---
+# Same contract as the iOS flow, against a different engine: slicing is
+# MediaExtractor/MediaMuxer here, not AVAssetExportSession. verify-clips reads
+# the second counter burned into each frame, because four clips of plausible
+# duration can all be the same opening segment.
+- launchApp:
+    clearState: true
+- waitForAnimationToEnd:
+    timeout: 8000
+- takeScreenshot: artifacts/android-01-home
+
+- tapOn: ".*(Select Video|Choose Video|Import).*"
+# Anchor on the picker's own chrome, not on text the app also has.
+- extendedWaitUntil:
+    visible: "Albums"
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 6000
+# The emulator's library holds only this app's fixture.
+- tapOn:
+    point: "17%,41%"
+
+- extendedWaitUntil:
+    visible: ".*Selected Video.*"
+    timeout: 45000
+- takeScreenshot: artifacts/android-02-loaded
+
+- tapOn: ".*Configure Split.*"
+- extendedWaitUntil:
+    visible: ".*(WhatsApp|Instagram|TikTok).*"
+    timeout: 25000
+- tapOn: ".*WhatsApp.*"
+- scrollUntilVisible:
+    element:
+      text: ".*Export \\d+ Clips.*"
+    direction: DOWN
+    timeout: 20000
+- tapOn: ".*Export \\d+ Clips.*"
+- extendedWaitUntil:
+    visible: ".*Clip lengths.*"
+    timeout: 300000
+- takeScreenshot: artifacts/android-03-exported
