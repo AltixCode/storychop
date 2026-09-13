@@ -88,7 +88,7 @@ export default function HomeScreen() {
         {video ? (
           <View className="bg-slate-900 border border-slate-800 rounded-2xl p-5 mb-6">
             <View className="flex-row items-center justify-between mb-4 pb-3 border-b border-slate-800">
-              <View className="flex-row items-center space-x-2">
+              <View className="flex-row items-center gap-2">
                 <View className="bg-blue-600/20 p-2 rounded-xl">
                   <Film size={20} color="#60A5FA" />
                 </View>
@@ -159,7 +159,7 @@ export default function HomeScreen() {
         )}
 
         {/* Core Architectural Guarantees */}
-        <View className="mt-6 space-y-3">
+        <View className="mt-6 flex-col gap-3">
           <Text className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
             {t('archGuarantees')}
           </Text>

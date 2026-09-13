@@ -74,7 +74,7 @@ export const PresetSelector: React.FC<PresetSelectorProps> = ({ onRequirePro }) 
                   : 'bg-slate-900/80 border-slate-800'
               }`}
             >
-              <View className="flex-row items-center space-x-2.5">
+              <View className="flex-row items-center gap-2.5">
                 {p.icon}
                 <View className="ml-2">
                   <Text className="text-white text-sm font-semibold">{p.label}</Text>
