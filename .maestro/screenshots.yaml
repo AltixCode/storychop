@@ -10,19 +10,62 @@ name: Store screenshots
 - takeScreenshot: 01-hero
 
 - tapOn: ".*(Select Video|Choose Video|Import).*"
+# Waited for, not assumed, and optional so the iPad can fall through: the
+# branch conditions below are evaluated once with no wait of their own, so
+# without this the iPhone takes the iPad path whenever the picker is a moment
+# slow to present.
 - extendedWaitUntil:
     visible:
       id: "photosView_content_scroll_view"
-    timeout: 30000
-- waitForAnimationToEnd:
-    timeout: 8000
-- extendedWaitUntil:
-    visible: "Video, .*"
-    timeout: 25000
-- waitForAnimationToEnd:
-    timeout: 6000
-- tapOn:
-    point: "17%,23%"
+    timeout: 20000
+    optional: true
+
+# The picker differs enough between the two devices that it needs two paths.
+#
+# On iPhone it is presented full screen and exposes its grid to accessibility,
+# so the wait below is a real anchor.
+#
+# On iPad it is a popover, and its contents are not in the accessibility tree at
+# all -- the only element there is a "dismiss popup" region. Nothing can be
+# waited on or matched, so that path is driven by position, which is stable for
+# a fixed device and runtime.
+- runFlow:
+    when:
+      visible:
+        id: "photosView_content_scroll_view"
+    commands:
+      - waitForAnimationToEnd:
+          timeout: 8000
+      - extendedWaitUntil:
+          visible: "Video, .*"
+          timeout: 25000
+      - waitForAnimationToEnd:
+          timeout: 6000
+      - tapOn:
+          point: "17%,23%"
+- runFlow:
+    when:
+      notVisible:
+        id: "photosView_content_scroll_view"
+    commands:
+      # Three settles, not one. waitForAnimationToEnd returns as soon as the
+      # screen stops moving, which happens before the picker's grid is
+      # interactive: a tap that lands in that window is delivered and does
+      # nothing, and the flow carries on having selected nothing.
+      - waitForAnimationToEnd:
+          timeout: 10000
+      - waitForAnimationToEnd:
+          timeout: 10000
+      - waitForAnimationToEnd:
+          timeout: 10000
+      - tapOn:
+          point: "39%,35%"
+      - waitForAnimationToEnd:
+          timeout: 3000
+      # The checkmark at the top right, which is what confirms on iPad. The
+      # button along the bottom reads "Show Selected" and only filters the grid.
+      - tapOn:
+          point: "87%,28%"
 - extendedWaitUntil:
     visible: ".*Selected Video.*"
     timeout: 45000
