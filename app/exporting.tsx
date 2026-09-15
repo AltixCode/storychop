@@ -7,6 +7,9 @@ import { useVideoStore } from '../src/store/useVideoStore';
 import { executeVideoSlicing } from '../src/engine/videoSlicer';
 import { t } from '../src/i18n';
 import { useTheme } from '../src/theme/useTheme';
+import { useAdsStore } from '../src/store/adsStore';
+import { showInterstitial } from '../src/services/ads';
+import { shouldShowInterstitial } from '../src/services/adPolicy';
 
 export default function ExportingScreen() {
   const theme = useTheme();
@@ -57,6 +60,7 @@ export default function ExportingScreen() {
         setClipDurations(result.durations);
         setIsDone(true);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        void useAdsStore.getState().recordCompletion();
       } else {
         setErrorMessage(result.error || t('exportFailed'));
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
@@ -71,10 +75,29 @@ export default function ExportingScreen() {
     };
   }, []);
 
+  const maybeShowInterstitial = async () => {
+    const { completions, lastInterstitialAt, markInterstitialShown } = useAdsStore.getState();
+    const decision = shouldShowInterstitial({
+      completions,
+      lastInterstitialAt,
+      now: Date.now(),
+      // Read at call time rather than captured: the user may have bought the upgrade from the
+      // paywall between opening this screen and finishing the work.
+      isPro: useVideoStore.getState().isPro,
+    });
+    if (!decision) return;
+    // Only a shown-and-dismissed ad resets the clock. Counting an unfilled request would
+    // suppress the next several ads for nothing.
+    if (await showInterstitial()) await markInterstitialShown();
+  };
+
   const handleDone = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     reset();
     router.replace('/');
+    // After the navigation, not before it: an ad that appears while the user is still looking
+    // at the export screen reads as the app refusing to let them leave.
+    void maybeShowInterstitial();
   };
 
   const handleCancel = () => {
