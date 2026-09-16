@@ -40,3 +40,8 @@ yarn-error.*
 /ios
 /android
 dist/
+
+# env — local secrets and public SDK keys, never committed
+.env
+.env.local
+.env.*.local
