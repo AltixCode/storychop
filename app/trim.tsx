@@ -15,9 +15,11 @@ import { usePaywall } from '../src/hooks/usePaywall';
 import { t } from '../src/i18n';
 import { ForwardArrow } from '../src/components/DirectionalIcons';
 import { useTheme } from '../src/theme/useTheme';
+import { useTabletColumn } from '../src/theme/useTabletColumn';
 
 export default function TrimScreen() {
   const theme = useTheme();
+  const tabletColumn = useTabletColumn();
   const { priceString } = usePaywall(() => undefined);
   const router = useRouter();
   const {
@@ -49,7 +51,7 @@ export default function TrimScreen() {
 
   return (
     <View className="flex-1 px-5" style={{ backgroundColor: theme.background }}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 , ...tabletColumn}}>
         {/* Preset Selector */}
         <PresetSelector onRequirePro={() => setPaywallVisible(true)} />
 
