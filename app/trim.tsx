@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Switch } from 'react-native';
 import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
@@ -32,10 +32,20 @@ export default function TrimScreen() {
 
   const [paywallVisible, setPaywallVisible] = useState(false);
 
-  if (!video) {
-    router.replace('/');
-    return null;
-  }
+  // Redirect AFTER the commit, never during render.
+  //
+  // `router.replace()` called in the render phase throws "Couldn't find a
+  // navigation context" -- React is still rendering, so the navigator is not
+  // in a state that can accept a navigation. It surfaces as a Render Error
+  // whose stack names the ROOT layout and the home screen rather than this
+  // file, which sends the reader to the wrong screen entirely. It fires on the
+  // ordinary guard path: arrive here with nothing loaded and the app dies
+  // instead of bouncing home.
+  useEffect(() => {
+    if (!video) router.replace('/');
+  }, [video, router]);
+
+  if (!video) return null;
 
   const isLongVideo = video.duration > 180; // > 3 minutes is Pro only
   const requiresPro = (isLongVideo && !isPro);
