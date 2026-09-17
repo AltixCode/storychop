@@ -61,7 +61,7 @@ export default function TrimScreen() {
 
   return (
     <View className="flex-1 px-5" style={{ backgroundColor: theme.background }}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 , ...tabletColumn}}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40, ...tabletColumn, flexGrow: 1, justifyContent: 'center' }}>
         {/* Preset Selector */}
         <PresetSelector onRequirePro={() => setPaywallVisible(true)} />
 
