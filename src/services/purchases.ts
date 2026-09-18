@@ -4,12 +4,27 @@ import Purchases, { PurchasesPackage, LOG_LEVEL } from "react-native-purchases";
 /**
  * The RevenueCat entitlement one purchase grants.
  *
- * The lookup key says "remove ads" because that is what the store product is named, but the
- * entitlement carries the whole upgrade: no ads *and* no free-tier limits. Keeping the key as
- * RevenueCat has it matters more than the name reading perfectly here -- renaming an
- * entitlement means recreating it, and the SDK keys die with it.
+ * This was `"remove_ads"`, under a comment explaining that the key was kept
+ * "as RevenueCat has it". RevenueCat does not have it. StoryChop's project
+ * (proj4af70a1b) has exactly one entitlement and its lookup key is **`pro`** --
+ * display name "StoryChop Pro", created 2026-09-12, verified against the live
+ * project on 2026-09-18.
+ *
+ * So `entitlements.active["remove_ads"]` was always undefined. A customer would
+ * have paid for StoryChop Pro Lifetime, RevenueCat would have granted `pro`,
+ * this check would have found nothing, and the app would have stayed locked --
+ * a purchase that takes the money and delivers nothing, on an app that passes
+ * every App Store Connect gate, because no gate can see an entitlement name.
+ *
+ * `pro` is also the better name here: this is a story-writing app whose product
+ * is "StoryChop Pro Lifetime", not an ad remover. The rest of the portfolio uses
+ * `remove_ads` on both sides and is consistent; StoryChop is the one that
+ * diverged, and the code was the half that was wrong.
+ *
+ * If this is ever changed, change it to match the live project, and check
+ * rather than assume: `rc entitlements list --project-id proj4af70a1b`.
  */
-const ENTITLEMENT_ID = "remove_ads";
+const ENTITLEMENT_ID = "pro";
 
 /**
  * The RevenueCat public SDK key, resolved by `config/env` so that the key lives in the build
