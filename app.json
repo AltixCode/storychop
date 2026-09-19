@@ -78,7 +78,16 @@
           ]
         }
       ],
-      "./plugins/withAndroidRtl"
+      "./plugins/withAndroidRtl",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableProguardInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true
+          }
+        }
+      ]
     ]
   }
 }

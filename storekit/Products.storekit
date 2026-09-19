@@ -1,0 +1,35 @@
+{
+  "identifier": "7A981E44-D6DD-4969-AC30-6B35F3FEE9A7",
+  "nonRenewingSubscriptions": [],
+  "products": [
+    {
+      "displayPrice": "4.99",
+      "familyShareable": false,
+      "internalID": "A1CDC5AA-D557-46B0-A6FA-B0DBAB8B6F19",
+      "localizations": [
+        {
+          "description": "storychop remove ads lifetime unlock",
+          "displayName": "storychop remove ads",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.altixcode.storychop.removeads",
+      "referenceName": "storychop remove ads",
+      "type": "NonConsumable"
+    }
+  ],
+  "settings": {
+    "_applicationInternalID": "",
+    "_developerTeamID": "",
+    "_failTransactionsEnabled": false,
+    "_lastSynchronizedDate": 0,
+    "_locale": "en_US",
+    "_storefront": "USA",
+    "_storeKitErrors": []
+  },
+  "subscriptionGroups": [],
+  "version": {
+    "major": 4,
+    "minor": 0
+  }
+}
