@@ -560,13 +560,6 @@ jobs:
             echo "KEY_PASSWORD=$APP_KEY_PASSWORD"
           } >> "$GITHUB_ENV"
 
-      - name: TEMP - print upload key cert (public cert only, no secret material)
-        if: github.event_name == 'workflow_dispatch'
-        run: |
-          echo "--- BEGIN PEM ---"
-          keytool -export -rfc -keystore "$KEYSTORE_PATH" -alias "$KEY_ALIAS" -storepass "$KEYSTORE_PASSWORD"
-          echo "--- END PEM ---"
-
       - name: Expo Prebuild Android
         run: npx expo prebuild --platform android --clean --no-install
 
